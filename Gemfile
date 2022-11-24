@@ -2,10 +2,10 @@ source "https://rubygems.org"
 
 gem "rails", "~> 7.0.3.1"
 
-gem "mysql2"
+# gem "mysql2"
 
 # uncomment to use PostgreSQL
-# gem "pg"
+gem "pg"
 
 # rails
 gem 'scenic'
