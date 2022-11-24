@@ -271,7 +271,7 @@ class Story < ApplicationRecord
     # submitted again
     Story
       .where(:url => urls)
-      .or(Story.where("url RLIKE ?", urls_with_trailing_pound.join(".|")))
+      .or(Story.where("url ~ ?", urls_with_trailing_pound.join(".|")))
       .where("is_deleted = ? OR is_moderated = ?", false, true)
   end
 
