@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_200248) do
     t.bigint "user_id", null: false, unsigned: true
     t.bigint "granted_by_user_id", null: false, unsigned: true
     t.string "hat", null: false
-    t.string "link", collation: "utf8mb4_general_ci"
+    t.string "link"
     t.boolean "modlog_use", default: false
     t.datetime "doffed_at", precision: nil
     t.index ["granted_by_user_id"], name: "hats_granted_by_user_id_fk"
@@ -235,7 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_200248) do
   create_table "suggested_titles", id: { type: :bigint, unsigned: true }, charset: "utf8mb3", force: :cascade do |t|
     t.bigint "story_id", null: false, unsigned: true
     t.bigint "user_id", null: false, unsigned: true
-    t.string "title", limit: 150, default: "", null: false, collation: "utf8mb4_general_ci"
+    t.string "title", limit: 150, default: "", null: false
     t.index ["story_id"], name: "suggested_titles_story_id_fk"
     t.index ["user_id"], name: "suggested_titles_user_id_fk"
   end
@@ -270,24 +270,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_200248) do
   end
 
   create_table "users", id: { type: :bigint, unsigned: true }, charset: "utf8mb3", force: :cascade do |t|
-    t.string "username", limit: 50, collation: "utf8mb4_general_ci"
-    t.string "email", limit: 100, collation: "utf8mb4_general_ci"
-    t.string "password_digest", limit: 75, collation: "utf8mb4_general_ci"
+    t.string "username", limit: 50
+    t.string "email", limit: 100
+    t.string "password_digest", limit: 75
     t.datetime "created_at", precision: nil
     t.boolean "is_admin", default: false
-    t.string "password_reset_token", limit: 75, collation: "utf8mb4_general_ci"
-    t.string "session_token", limit: 75, default: "", null: false, collation: "utf8mb4_general_ci"
-    t.text "about", size: :medium, collation: "utf8mb4_general_ci"
+    t.string "password_reset_token", limit: 75
+    t.string "session_token", limit: 75, default: "", null: false
+    t.text "about", size: :medium
     t.bigint "invited_by_user_id", unsigned: true
     t.boolean "is_moderator", default: false
     t.boolean "pushover_mentions", default: false
-    t.string "rss_token", limit: 75, collation: "utf8mb4_general_ci"
-    t.string "mailing_list_token", limit: 75, collation: "utf8mb4_general_ci"
+    t.string "rss_token", limit: 75
+    t.string "mailing_list_token", limit: 75
     t.integer "mailing_list_mode", default: 0
     t.integer "karma", default: 0, null: false
     t.datetime "banned_at", precision: nil
     t.bigint "banned_by_user_id", unsigned: true
-    t.string "banned_reason", limit: 200, collation: "utf8mb4_general_ci"
+    t.string "banned_reason", limit: 200
     t.datetime "deleted_at", precision: nil
     t.datetime "disabled_invite_at", precision: nil
     t.bigint "disabled_invite_by_user_id", unsigned: true
