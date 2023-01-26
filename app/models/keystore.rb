@@ -23,6 +23,10 @@ class Keystore < ApplicationRecord
       Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
         "`key`, `value`) VALUES (#{q(key)}, #{q(value)}) ON DUPLICATE KEY " +
         "UPDATE `value` = #{q(value)}")
+    elsif Keystore.connection.adapter_name =~ /PostgreSQL/
+      Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
+        "key, value) VALUES (#{q(key)}, #{q(value)}) ON CONFLICT (key) DO " +
+        "UPDATE SET value = #{q(value)}")
     else
       kv = self.find_or_create_key_for_update(key, value)
       kv.value = value
@@ -48,6 +52,10 @@ class Keystore < ApplicationRecord
         Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
           "`key`, `value`) VALUES (#{q(key)}, #{q(amount)}) ON DUPLICATE KEY " +
           "UPDATE `value` = `value` + #{q(amount)}")
+      elsif Keystore.connection.adapter_name =~ /PostgreSQL/
+        Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
+          "key, value) VALUES (#{q(key)}, #{q(amount)}) ON CONFLICT (key) DO " +
+          "UPDATE SET value = value + #{q(amount)}")
       else
         kv = self.find_or_create_key_for_update(key, 0)
         kv.value = kv.value.to_i + amount
