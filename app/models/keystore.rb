@@ -55,7 +55,7 @@ class Keystore < ApplicationRecord
       elsif Keystore.connection.adapter_name =~ /PostgreSQL/
         Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
           "key, value) VALUES (#{q(key)}, #{q(amount)}) ON CONFLICT (key) DO " +
-          "UPDATE SET value = value + #{q(amount)}")
+          "UPDATE SET value = #{Keystore.table_name}.value + #{q(amount)}")
       else
         kv = self.find_or_create_key_for_update(key, 0)
         kv.value = kv.value.to_i + amount
